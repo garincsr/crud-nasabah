@@ -28,7 +28,7 @@ public class Main {
                     }
                     break;
                 case 2:
-//                    readNasabah();
+                    readNasabah();
                     break;
                 case 3:
 //                    updateNasabah();
@@ -76,6 +76,17 @@ public class Main {
         Nasabah.nasabahList.add(new Nasabah(id, fullName, nik, phoneNumber,birthDate));
         System.out.println("Nasabah added successfully!");
 
+    }
+
+    public static void readNasabah(){
+        if (Nasabah.nasabahList.isEmpty()){
+            System.out.println("No nasabah to display.");
+        } else {
+            System.out.println("=========== List of nasabah ===========");
+            for (int i = 0; i < Nasabah.nasabahList.size() ; i++) {
+                System.out.println((i + 1) + ", " + Nasabah.nasabahList.get(i));
+            }
+        }
     }
 
 }
