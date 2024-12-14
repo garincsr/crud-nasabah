@@ -7,4 +7,5 @@ public interface NasabahInterface {
     void readNasabah();
     void updateNasabah(Scanner scanner);
     void deleteNasabah(Scanner scanner);
+    void deleteNasabahById(Scanner scanner);
 }
