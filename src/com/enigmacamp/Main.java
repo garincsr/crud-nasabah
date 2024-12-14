@@ -1,9 +1,11 @@
 package com.enigmacamp;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        NasabahService service = new NasabahService();
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -13,7 +15,8 @@ public class Main {
             System.out.println("2. Read Nasabah");
             System.out.println("3. Update Nasabah");
             System.out.println("4. Delete Nasabah");
-            System.out.println("5. Exit");
+            System.out.println("5. Delete Nasabah by ID");
+            System.out.println("6. Exit");
             System.out.print("Choose an option: ");
 
             choice = scanner.nextInt();
@@ -22,71 +25,32 @@ public class Main {
             switch (choice){
                 case 1:
                     try {
-                        createNasabah(scanner);
+                        service.createNasabah(scanner);
                     } catch (InvalidDataException e) {
                         System.out.println("Error: " + e.getMessage());
                     }
                     break;
                 case 2:
-                    readNasabah();
+                    service.readNasabah();
                     break;
                 case 3:
-//                    updateNasabah();
+                    service.updateNasabah(scanner);
                     break;
                 case 4:
-//                    deleteNasabah();
+                    service.deleteNasabah(scanner);
                     break;
                 case 5:
+                    service.deleteNasabahById(scanner);
+                    break;
+                case 6:
                     System.out.println("Goodbye");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again");
             }
-        } while (choice != 5);
+        } while (choice != 6);
 
         scanner.close();
-    }
-
-    public static void createNasabah (Scanner scanner) throws InvalidDataException{
-        if (Nasabah.nasabahList.size() >= Nasabah.MAX_NASABAH){
-            throw new InvalidDataException("Nasabah sudah penuh!!");
-        }
-
-        System.out.print("Enter ID: ");
-        Integer id = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Enter Full Name: ");
-        String fullName = scanner.nextLine();
-        System.out.print("Enter NIK: ");
-        String nik = scanner.nextLine();
-        System.out.print("Enter Phone Number: ");
-        String phoneNumber = scanner.nextLine();
-        System.out.print("Enter Birth Date: ");
-        String birthDate = scanner.nextLine();
-
-        for(Nasabah n : Nasabah.nasabahList){
-            if (n.getId().equals(id)){
-                throw new InvalidDataException("ID must be unique");
-            }
-            if (n.getNik().equals(nik)) {
-                throw new InvalidDataException("NIK must be unique");
-            }
-        }
-
-        Nasabah.nasabahList.add(new Nasabah(id, fullName, nik, phoneNumber,birthDate));
-        System.out.println("Nasabah added successfully!");
-
-    }
-
-    public static void readNasabah(){
-        if (Nasabah.nasabahList.isEmpty()){
-            System.out.println("No nasabah to display.");
-        } else {
-            System.out.println("=========== List of nasabah ===========");
-            for (int i = 0; i < Nasabah.nasabahList.size() ; i++) {
-                System.out.println((i + 1) + ", " + Nasabah.nasabahList.get(i));
-            }
-        }
     }
 
 }
@@ -97,7 +61,7 @@ public class Main {
 //      a. validasi jika data sudah penuh
 //      b. validasi jika data tidak ada ketika melakukan (update, delete dan get by id)
 //      c. validasi jika id, nik dan phone number sudah ada artinya harus unique
-//3, buatkah branch aru dengan nama 02-use-interface dan gunakanlah interface/contract untuk CRUD service
+//3, buatkah branch baru dengan nama 02-use-interface dan gunakanlah interface/contract untuk CRUD service
 //4. buatlah commit per feature, contoh :
 //                              - feat : create nasabah
 //                              - feat : update nasabah

@@ -1,20 +1,11 @@
 package com.enigmacamp;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Nasabah {
-    public static final Integer MAX_NASABAH = 15;
-    public static List<Nasabah> nasabahList = new ArrayList<>();
-
-
     private Integer id;
     private String fullName;
     private String nik;
     private String phoneNumber;
     private String birthDate;
-
-//    public Nasabah() {}
 
     public Nasabah(Integer id, String fullName, String nik, String phoneNumber, String birthDate) {
         this.id = id;
