@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class NasabahService{
+public class NasabahService implements NasabahInterface{
     public static final Integer MAX_NASABAH = 15;
     public static List<Nasabah> nasabahList = new ArrayList<>();
 
@@ -55,9 +55,41 @@ public class NasabahService{
         }
     }
 
-    public void updateNasabah(Scanner scanner){
+    public void updateNasabah(Scanner scanner) throws InvalidDataException{
         readNasabah();
+        if (!nasabahList.isEmpty()){
+            System.out.print("Enter the ID of nasabah to update data: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
 
+            Boolean isFound = false;
+            for (int i = 0; i < nasabahList.size() ; i++) {
+                if (nasabahList.get(i).getId() == id){
+                    System.out.print("Enter full name: ");
+                    String fullName = scanner.nextLine();
+                    nasabahList.get(i).setFullName(fullName);
+
+                    System.out.print("Enter NIK: ");
+                    String nik = scanner.nextLine();
+                    nasabahList.get(i).setNik(nik);
+
+                    System.out.print("Enter phone number: ");
+                    String phoneNumber = scanner.nextLine();
+                    nasabahList.get(i).setNik(phoneNumber);
+
+                    System.out.print("Enter birth date: ");
+                    String birthDate = scanner.nextLine();
+                    nasabahList.get(i).setNik(birthDate);
+
+                    isFound = true;
+                }
+            }
+
+            if (!isFound){
+                throw new InvalidDataException("Data not found, cant update");
+            }
+
+        }
     }
 
     public void deleteNasabah(Scanner scanner) {
