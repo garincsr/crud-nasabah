@@ -40,6 +40,7 @@ public class NasabahService implements NasabahInterface{
         String birthDate = scanner.nextLine();
 
         nasabahList.add(new Nasabah(id, fullName, nik, phoneNumber,birthDate));
+        validation(id, nik, phoneNumber);
         System.out.println("Nasabah added successfully!");
 
     }
@@ -67,20 +68,22 @@ public class NasabahService implements NasabahInterface{
                 if (nasabahList.get(i).getId() == id){
                     System.out.print("Enter full name: ");
                     String fullName = scanner.nextLine();
-                    nasabahList.get(i).setFullName(fullName);
 
                     System.out.print("Enter NIK: ");
                     String nik = scanner.nextLine();
-                    nasabahList.get(i).setNik(nik);
 
                     System.out.print("Enter phone number: ");
                     String phoneNumber = scanner.nextLine();
-                    nasabahList.get(i).setNik(phoneNumber);
 
                     System.out.print("Enter birth date: ");
                     String birthDate = scanner.nextLine();
-                    nasabahList.get(i).setNik(birthDate);
 
+                    validation(nasabahList.get(i).getId(), nik, phoneNumber);
+
+                    nasabahList.get(i).setFullName(fullName);
+                    nasabahList.get(i).setNik(nik);
+                    nasabahList.get(i).setPhoneNumber(phoneNumber);
+                    nasabahList.get(i).setBirthDate(birthDate);
                     isFound = true;
                 }
             }
@@ -124,6 +127,22 @@ public class NasabahService implements NasabahInterface{
             }
             if (!isFound){
                 throw new InvalidDataException("Data not found, cand delete");
+            }
+        }
+    }
+
+    public void validation(Integer id, String nik, String phoneNumber) throws InvalidDataException{
+        for (Nasabah n : nasabahList){
+            if (n != null && n.getId() == id){
+                throw new InvalidDataException("ID must be unique");
+            }
+
+            if (n != null && n.getNik().equals(nik)){
+                throw new InvalidDataException("NIK must be unique");
+            }
+
+            if (n != null && n.getPhoneNumber().equals(phoneNumber)){
+                throw new InvalidDataException("Phone Number must be unique");
             }
         }
     }
