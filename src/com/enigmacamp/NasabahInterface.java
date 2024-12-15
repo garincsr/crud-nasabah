@@ -8,4 +8,5 @@ public interface NasabahInterface {
     void updateNasabah(Scanner scanner);
     void deleteNasabah(Scanner scanner);
     void deleteNasabahById(Scanner scanner);
+    void validation(Integer id, String nik, String phoneNumber);
 }
