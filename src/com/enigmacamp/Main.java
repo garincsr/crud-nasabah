@@ -1,6 +1,5 @@
 package com.enigmacamp;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -18,7 +17,6 @@ public class Main {
             System.out.println("5. Delete Nasabah by ID");
             System.out.println("6. Exit");
             System.out.print("Choose an option: ");
-
             choice = scanner.nextInt();
             scanner.nextLine();
 
