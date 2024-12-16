@@ -65,3 +65,11 @@ public class Main {
 //                              - feat : create nasabah
 //                              - feat : update nasabah
 //                              - fix : unique attribute validation when create data
+
+
+
+// 1, Refactor menggunakan ArrayList
+// 2. Buatkanlah Bash Console untuk proses managemen data
+// 3. Buat branch baru:
+//      03-with-arraylist
+//      04-bash-console

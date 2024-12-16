@@ -17,22 +17,10 @@ public class NasabahService implements NasabahInterface{
         Integer id = scanner.nextInt();
         scanner.nextLine();
 
-        for(Nasabah n : nasabahList){
-            if (n.getId().equals(id)){
-                throw new InvalidDataException("ID must be unique");
-            }
-        }
-
         System.out.print("Enter Full Name: ");
         String fullName = scanner.nextLine();
         System.out.print("Enter NIK: ");
         String nik = scanner.nextLine();
-
-        for(Nasabah n : nasabahList){
-            if (n.getNik().equals(nik)) {
-                throw new InvalidDataException("NIK must be unique");
-            }
-        }
 
         System.out.print("Enter Phone Number: ");
         String phoneNumber = scanner.nextLine();
