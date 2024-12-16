@@ -8,46 +8,45 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
-        do {
-            System.out.println("=========== Nasabah Bank CRUD ===========");
-            System.out.println("1. Create Nasabah");
-            System.out.println("2. Read Nasabah");
-            System.out.println("3. Update Nasabah");
-            System.out.println("4. Delete Nasabah");
-            System.out.println("5. Delete Nasabah by ID");
-            System.out.println("6. Exit");
-            System.out.print("Choose an option: ");
+            do {
+                System.out.println("=========== Nasabah Bank CRUD ===========");
+                System.out.println("1. Create Nasabah");
+                System.out.println("2. Read Nasabah");
+                System.out.println("3. Update Nasabah");
+                System.out.println("4. Delete Nasabah");
+                System.out.println("5. Delete Nasabah by ID");
+                System.out.println("6. Exit");
 
-            choice = scanner.nextInt();
-            scanner.nextLine();
+                NasabahInputHandler inputHandler = new NasabahInputHandler(scanner);
+                choice = inputHandler.getInt("Choose option: ");
 
-            switch (choice){
-                case 1:
-                    try {
-                        service.createNasabah(scanner);
-                    } catch (InvalidDataException e) {
-                        System.out.println("Error: " + e.getMessage());
+                    switch (choice){
+                        case 1:
+                            try {
+                                service.createNasabah(scanner);
+                            } catch (InvalidDataException e) {
+                                System.out.println("Error: " + e.getMessage());
+                            }
+                            break;
+                        case 2:
+                            service.readNasabah();
+                            break;
+                        case 3:
+                            service.updateNasabah(scanner);
+                            break;
+                        case 4:
+                            service.deleteNasabah(scanner);
+                            break;
+                        case 5:
+                            service.deleteNasabahById(scanner);
+                            break;
+                        case 6:
+                            System.out.println("Goodbye");
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Please try again");
                     }
-                    break;
-                case 2:
-                    service.readNasabah();
-                    break;
-                case 3:
-                    service.updateNasabah(scanner);
-                    break;
-                case 4:
-                    service.deleteNasabah(scanner);
-                    break;
-                case 5:
-                    service.deleteNasabahById(scanner);
-                    break;
-                case 6:
-                    System.out.println("Goodbye");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again");
-            }
-        } while (choice != 6);
+            } while (choice != 6);
 
         scanner.close();
     }

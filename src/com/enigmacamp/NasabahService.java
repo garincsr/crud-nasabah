@@ -3,6 +3,7 @@ package com.enigmacamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class NasabahService implements NasabahInterface{
     public static final Integer MAX_NASABAH = 15;
@@ -13,22 +14,15 @@ public class NasabahService implements NasabahInterface{
             throw new InvalidDataException("Nasabah sudah penuh!!");
         }
 
-        System.out.print("Enter ID: ");
-        Integer id = scanner.nextInt();
-        scanner.nextLine();
+        NasabahInputHandler inputHandler = new NasabahInputHandler(scanner);
+        Integer id = inputHandler.getInt("Enter ID: ");
+        String fullName = inputHandler.getString("Enter Full Name: ");
+        String nik = inputHandler.getString("Enter NIK: ");
+        String phoneNumber = inputHandler.getString("Enter Phone Number: ");
+        String birthDate = inputHandler.getString("Enter Birth Date: ");
 
-        System.out.print("Enter Full Name: ");
-        String fullName = scanner.nextLine();
-        System.out.print("Enter NIK: ");
-        String nik = scanner.nextLine();
-
-        System.out.print("Enter Phone Number: ");
-        String phoneNumber = scanner.nextLine();
-        System.out.print("Enter Birth Date: ");
-        String birthDate = scanner.nextLine();
-
-        nasabahList.add(new Nasabah(id, fullName, nik, phoneNumber,birthDate));
         validation(id, nik, phoneNumber);
+        nasabahList.add(new Nasabah(id, fullName, nik, phoneNumber,birthDate));
         System.out.println("Nasabah added successfully!");
 
     }
@@ -39,7 +33,7 @@ public class NasabahService implements NasabahInterface{
         } else {
             System.out.println("=========== List of nasabah ===========");
             for (int i = 0; i < nasabahList.size() ; i++) {
-                System.out.println((i + 1) + ", " + nasabahList.get(i));
+                System.out.println((i + 1) + ". " + nasabahList.get(i));
             }
         }
     }
@@ -54,20 +48,18 @@ public class NasabahService implements NasabahInterface{
             Boolean isFound = false;
             for (int i = 0; i < nasabahList.size() ; i++) {
                 if (nasabahList.get(i).getId() == id){
-                    System.out.print("Enter full name: ");
-                    String fullName = scanner.nextLine();
+                    NasabahInputHandler inputHandler = new NasabahInputHandler(scanner);
 
-                    System.out.print("Enter NIK: ");
-                    String nik = scanner.nextLine();
+                    int randomIntSpecificRange = ThreadLocalRandom.current().nextInt(0, 9);
+                    Integer idRandom = (nasabahList.get(i).getId() * randomIntSpecificRange + randomIntSpecificRange);
+                    String fullName = inputHandler.getString("Enter Full Name: ");
+                    String nik = inputHandler.getString("Enter NIK: ");
+                    String phoneNumber = inputHandler.getString("Enter Phone Number: ");
+                    String birthDate = inputHandler.getString("Enter Birth Date: ");
 
-                    System.out.print("Enter phone number: ");
-                    String phoneNumber = scanner.nextLine();
+                    validation(idRandom, nik, phoneNumber);
 
-                    System.out.print("Enter birth date: ");
-                    String birthDate = scanner.nextLine();
-
-                    validation(nasabahList.get(i).getId(), nik, phoneNumber);
-
+                    nasabahList.get(i).setId(idRandom);
                     nasabahList.get(i).setFullName(fullName);
                     nasabahList.get(i).setNik(nik);
                     nasabahList.get(i).setPhoneNumber(phoneNumber);
