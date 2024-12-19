@@ -1,7 +1,4 @@
-package com.enigmacamp;
-
-import java.io.IOException;
-import java.util.InputMismatchException;
+package com.enigmacamp.utils;
 
 public class InvalidDataException extends RuntimeException {
     public InvalidDataException (String msg) {

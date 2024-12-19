@@ -1,10 +1,24 @@
 package com.enigmacamp;
 
+import com.enigmacamp.service.IOService;
+import com.enigmacamp.service.NasabahService;
+import com.enigmacamp.utils.InvalidDataException;
+import com.enigmacamp.utils.NasabahInputHandler;
+
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        File file = new File("storage.txt");
+
         NasabahService service = new NasabahService();
+
+        //create file
+        IOService.checkOrCreateFile(file);
+
+        System.out.println(NasabahService.getNasabahList());
+
         Scanner scanner = new Scanner(System.in);
         int choice;
 

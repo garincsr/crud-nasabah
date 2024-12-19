@@ -1,18 +1,28 @@
-package com.enigmacamp;
+package com.enigmacamp.service;
 
+import com.enigmacamp.utils.InvalidDataException;
+import com.enigmacamp.model.Nasabah;
+import com.enigmacamp.utils.NasabahInputHandler;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class NasabahService implements NasabahInterface{
-    public static final Integer MAX_NASABAH = 15;
+public class NasabahService implements NasabahInterface {
+    public static Integer nasabahCount = 0;
+//    public static final Integer MAX_NASABAH = 15;
     public static List<Nasabah> nasabahList = new ArrayList<>();
 
-    public void createNasabah (Scanner scanner) throws InvalidDataException{
-        if (nasabahList.size() >= MAX_NASABAH){
-            throw new InvalidDataException("Nasabah sudah penuh!!");
-        }
+    public NasabahService(){
+        IOService.readAllFile(nasabahList, nasabahCount);
+    }
+
+    public void createNasabah (Scanner scanner) throws InvalidDataException {
+//        if (nasabahList.size() >= MAX_NASABAH){
+//            throw new InvalidDataException("Nasabah sudah penuh!!");
+//        }
 
         NasabahInputHandler inputHandler = new NasabahInputHandler(scanner);
         Integer id = inputHandler.getInt("Enter ID: ");
@@ -23,6 +33,8 @@ public class NasabahService implements NasabahInterface{
 
         validation(id, nik, phoneNumber);
         nasabahList.add(new Nasabah(id, fullName, nik, phoneNumber,birthDate));
+        System.out.println(getNasabahList());
+        IOService.writeFile(nasabahList);
         System.out.println("Nasabah added successfully!");
 
     }
@@ -125,5 +137,11 @@ public class NasabahService implements NasabahInterface{
                 throw new InvalidDataException("Phone Number must be unique");
             }
         }
+    }
+
+
+    // --------- SECTION GETTER SETTER
+    public static List<Nasabah> getNasabahList() {
+        return nasabahList;
     }
 }
