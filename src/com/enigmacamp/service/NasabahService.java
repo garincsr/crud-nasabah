@@ -6,18 +6,19 @@ import com.enigmacamp.utils.NasabahInputHandler;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class NasabahService implements NasabahInterface {
+    //    public static final Integer MAX_NASABAH = 15;
     public static Integer nasabahCount = 0;
-//    public static final Integer MAX_NASABAH = 15;
     public static List<Nasabah> nasabahList = new ArrayList<>();
 
-    public NasabahService(){
-        IOService.readAllFile(nasabahList, nasabahCount);
-    }
+//    public NasabahService(){
+////        IOService.readAllFile(nasabahList, nasabahCount);
+//    }
 
     public void createNasabah (Scanner scanner) throws InvalidDataException {
 //        if (nasabahList.size() >= MAX_NASABAH){
@@ -36,18 +37,23 @@ public class NasabahService implements NasabahInterface {
         System.out.println(getNasabahList());
         IOService.writeFile(nasabahList);
         System.out.println("Nasabah added successfully!");
-
     }
 
     public void readNasabah(){
-        if (nasabahList.isEmpty()){
-            System.out.println("No nasabah to display.");
-        } else {
-            System.out.println("=========== List of nasabah ===========");
-            for (int i = 0; i < nasabahList.size() ; i++) {
-                System.out.println((i + 1) + ". " + nasabahList.get(i));
+//        if (nasabahList.isEmpty()){
+//            System.out.println("No nasabah to display.");
+//        } else {
+//            System.out.println("=========== List of nasabah ===========");
+//            for (int i = 0; i <= nasabahCount ; i++) {
+////                System.out.println((i + 1) + ". " + nasabahList.get(i));
+//                IOService.readAllFile(nasabahList, nasabahCount);
+//            }
+//        }
+
+        System.out.println("=========== List of nasabah ===========");
+            for (int i = 0; i <= nasabahCount ; i++) {
+                IOService.readAllFile(nasabahList, nasabahCount);
             }
-        }
     }
 
     public void updateNasabah(Scanner scanner) throws InvalidDataException{

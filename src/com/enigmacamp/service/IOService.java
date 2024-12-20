@@ -49,6 +49,7 @@ public class IOService {
                     );
                     nasabahList.add(nasabah);
                     nasabahCount++;
+                    System.out.println(data);
                 }
             }
         } catch (IOException e) {
@@ -57,16 +58,13 @@ public class IOService {
     }
 
     public static void writeFile(List<Nasabah> nasabahList) {
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-
+        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
             //Header
             bufferedWriter.write("id, fullName, nik, phoneNumber, birthDate");
             bufferedWriter.newLine();
 
             //Data
             for (Nasabah nasabah : nasabahList) {
-                System.out.println("INI BELAJALAN");
                 bufferedWriter.write(
                         nasabah.getId() + "," +
                                 nasabah.getFullName() + "," +
@@ -76,7 +74,7 @@ public class IOService {
                 );
                 bufferedWriter.newLine();
             }
-            bufferedWriter.close();
+            System.out.println();
             System.out.println("Data berhasil ditambahkan ke " + file.getName());
         } catch (IOException e) {
             throw new RuntimeException(e);
