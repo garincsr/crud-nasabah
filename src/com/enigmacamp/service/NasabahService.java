@@ -6,7 +6,7 @@ import com.enigmacamp.utils.NasabahIOHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NasabahService {
+public class NasabahService implements NasabahInterface {
     public List<Nasabah> nasabahList = new ArrayList<>();
     public Integer nasabahCount = 0;
 
