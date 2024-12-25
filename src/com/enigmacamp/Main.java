@@ -1,56 +1,151 @@
 package com.enigmacamp;
 
+import com.enigmacamp.model.Nasabah;
+import com.enigmacamp.service.NasabahService;
+import com.enigmacamp.utils.NasabahIOHandler;
+import com.enigmacamp.utils.NasabahInputHandler;
+
+import java.io.File;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        NasabahService service = new NasabahService();
-        Scanner scanner = new Scanner(System.in);
-        int choice;
+        //file
+        File file = new File("storage.txt");
+        NasabahIOHandler.checkOrCreateFile(file);
 
+        //initiate Scanner
+        Scanner scanner = new Scanner(System.in);
+        //panggil object
+        NasabahService service = new NasabahService();
+        NasabahInputHandler inputHandler = new NasabahInputHandler(scanner);
+
+        int choice;
         do {
-            System.out.println("=========== Nasabah Bank CRUD ===========");
+            System.out.println("==================== CRUD Nasabah ====================");
             System.out.println("1. Create Nasabah");
-            System.out.println("2. Read Nasabah");
-            System.out.println("3. Update Nasabah");
-            System.out.println("4. Delete Nasabah");
-            System.out.println("5. Delete Nasabah by ID");
+            System.out.println("2. Read All Nasabah");
+            System.out.println("3. Read Nasabah By ID");
+            System.out.println("4. Update Nasabah By ID");
+            System.out.println("5. Delete Nasabah By ID");
             System.out.println("6. Exit");
-            System.out.print("Choose an option: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            choice = inputHandler.getInt("Choose Option: ");
 
             switch (choice){
                 case 1:
+                    Integer id = inputHandler.getInt("Enter ID: ");
+                    String fullName = inputHandler.getString("Enter Full Name: ");
+                    String nik = inputHandler.getString("Enter NIK Number: ");
+                    String phoneNumber = inputHandler.getString("Enter Phone Number: ");
+                    String birtDate = inputHandler.getString("Enter Birth Date: ");
+                    //validasi unique
                     try {
-                        service.createNasabah(scanner);
-                    } catch (InvalidDataException e) {
-                        System.out.println("Error: " + e.getMessage());
+                        Nasabah.validationCreate(id, nik, phoneNumber, service.nasabahList);
+                    } catch (RuntimeException e){
+                        System.out.println(e.getMessage());
+                        break;
                     }
+                    //create nasabah
+                    Nasabah createNewNasabah = new Nasabah(id, fullName, nik, phoneNumber,birtDate);
+                    service.createNasabah(createNewNasabah);
+                    System.out.println("Haloo " + createNewNasabah.getFullName() + " your data succesfully added!");
                     break;
                 case 2:
-                    service.readNasabah();
+                    try {
+                        List<Nasabah> readAll = service.readAllNasabah();
+                        for (Nasabah nasabah : readAll){
+                            System.out.println(nasabah.getId() + ", "
+                                    + nasabah.getFullName() + ", "
+                                    + nasabah.getNik() + ", "
+                                    + nasabah.getPhoneNumber() + ", "
+                                    + nasabah.getBirthDate() + ", "
+                            );
+                        }
+                    } catch (IllegalStateException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 3:
-                    service.updateNasabah(scanner);
+                    try{
+                        try {
+                            //cek nasabah list kosong atau tidak
+                            service.readAllNasabah();
+                        } catch (IllegalStateException e){
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+                        Integer idRead = inputHandler.getInt("Enter ID to Show Data: ");
+                        Nasabah nasabah = service.readNasabahById(idRead);
+                        System.out.println("Data: " + nasabah);
+                    }catch (IllegalStateException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 4:
-                    service.deleteNasabah(scanner);
+                    try {
+                        //cek nasabah list kosong atau tidak
+                        service.readAllNasabah();
+                    } catch (IllegalStateException e){
+                        System.out.println(e.getMessage());
+                        break;
+                    }
+                    //masukkan id yang mau di update
+                    Integer idUpdate = inputHandler.getInt("Enter ID to Update: ");
+                    //cek id benar atau tidak
+                    try {
+                        service.readNasabahById(idUpdate);
+                    } catch (IllegalStateException e){
+                        System.out.println(e.getMessage());
+                        break;
+                    }
+                    //input data data selanjutnya
+                    String fullNameUpdate = inputHandler.getString("Enter Full Name: ");
+                    String nikUpdate = inputHandler.getString("Enter nik: ");
+                    String phoneNumberUpdate = inputHandler.getString("Enter Phone Number: ");
+                    String birthDateUpdate = inputHandler.getString("Enter Birth Date: ");
+                    //tangkap data yang diinput lalu parsing ke service
+                    Nasabah updateNasabah = new Nasabah(idUpdate, fullNameUpdate, nikUpdate, phoneNumberUpdate, birthDateUpdate);
+                    service.updateNasabahById(idUpdate, updateNasabah);
                     break;
                 case 5:
-                    service.deleteNasabahById(scanner);
+                    //                        //cek nasabah list kosong atau tidak
+//                        service.readAllNasabah();
+//                        Integer idDelete = inputHandler.getInt("Enter ID to Delete: ");
+//                        //cek nasabah sesuai id
+//                        service.readNasabahById(idDelete);
+//                        //hapus data
+//                        service.deleteNasabahById(idDelete);
+                    try {
+                        List<Nasabah> readAll = service.readAllNasabah();
+                        for (Nasabah nasabah : readAll){
+                            System.out.println(nasabah.getId() + ", "
+                                    + nasabah.getFullName() + ", "
+                                    + nasabah.getNik() + ", "
+                                    + nasabah.getPhoneNumber() + ", "
+                                    + nasabah.getBirthDate() + ", "
+                            );
+                        }
+                    } catch (IllegalStateException e) {
+                        System.out.println(e.getMessage());
+                        break;
+                    }
+                    Integer idDelete = inputHandler.getInt("Enter ID to Delete: ");
+                    service.deleteNasabahById(idDelete);
+                    System.out.println("Data Deleted!!");
+                    System.out.println();
                     break;
                 case 6:
-                    System.out.println("Goodbye");
+                    System.out.println("Goodbye~");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again");
+                    System.out.println("Invalid choice, choose the right number");
             }
+
         } while (choice != 6);
 
         scanner.close();
     }
-
 }
 
 //Lanjutkanlah hands on dengan ketentuan berikut :
@@ -64,3 +159,11 @@ public class Main {
 //                              - feat : create nasabah
 //                              - feat : update nasabah
 //                              - fix : unique attribute validation when create data
+
+
+
+// 1, Refactor menggunakan ArrayList
+// 2. Buatkanlah Bash Console untuk proses managemen data
+// 3. Buat branch baru:
+//      03-with-arraylist
+//      04-bash-console

@@ -1,4 +1,10 @@
-package com.enigmacamp;
+package com.enigmacamp.model;
+
+import com.enigmacamp.utils.IDMustBeUnique;
+import com.enigmacamp.utils.NIKMustBeUnique;
+import com.enigmacamp.utils.PhoneNumberMustBeUnique;
+
+import java.util.List;
 
 public class Nasabah {
     private Integer id;
@@ -64,5 +70,22 @@ public class Nasabah {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", birthDate='" + birthDate + '\'' +
                 '}';
+    }
+
+    //======== Validation
+    public static void validationCreate(Integer id, String nik, String phoneNumber, List<Nasabah> nasabahList) throws RuntimeException{
+        for (Nasabah n : nasabahList){
+            if (n != null && n.getId().equals(id)){
+                throw new IDMustBeUnique("ID must be unique");
+            }
+
+            if (n != null && n.getNik().equals(nik)){
+                throw new NIKMustBeUnique("NIK must be unique");
+            }
+
+            if (n != null && n.getPhoneNumber().equals(phoneNumber)){
+                throw new PhoneNumberMustBeUnique("Phone Number must be unique");
+            }
+        }
     }
 }

@@ -1,0 +1,2 @@
+id, fullName, nik, phoneNumber, birthDate
+77,James Bond,77777777777777,0898771625677,07-07-90
