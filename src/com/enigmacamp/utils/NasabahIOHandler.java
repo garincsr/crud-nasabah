@@ -105,9 +105,12 @@ public class NasabahIOHandler {
 
     public static void writeFile(List<Nasabah> nasabahList){
         try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
-            //Buat header
-            bufferedWriter.write("id, fullName, nik, phoneNumber, birthDate");
-            bufferedWriter.newLine();
+
+           if (file.length() == 0){
+               //Buat header
+               bufferedWriter.write("id, fullName, nik, phoneNumber, birthDate");
+               bufferedWriter.newLine();
+           }
 
             //Buat data sesuai input
             for (Nasabah nasabah : nasabahList){

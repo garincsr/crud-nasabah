@@ -11,8 +11,14 @@ public class NasabahService implements NasabahInterface {
     public Integer nasabahCount = 0;
 
     public void createNasabah(Nasabah createNewNasabah){
-        nasabahList.add(createNewNasabah);
-        NasabahIOHandler.writeFile(this.nasabahList);
+        // Pastikan memuat semua data dari file
+        List<Nasabah> existingNasabah = NasabahIOHandler.readFile(nasabahCount);
+
+        // Tambahkan nasabah baru ke daftar
+        existingNasabah.add(createNewNasabah);
+
+        // Perbarui file dengan data baru
+        NasabahIOHandler.writeFile(existingNasabah);
     }
 
     public List<Nasabah> readAllNasabah(){
