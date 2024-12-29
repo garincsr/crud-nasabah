@@ -14,7 +14,6 @@ public class NasabahInputHandler {
 
         while(!scanner.hasNextInt()){
             System.out.println("Input harus berupa angka !");
-            System.out.println();
             scanner.nextLine();
             System.out.print(prompt);
         }
