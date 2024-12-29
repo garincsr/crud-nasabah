@@ -12,7 +12,7 @@ public class NasabahService implements NasabahInterface {
 
     public void createNasabah(Nasabah createNewNasabah){
         // Pastikan memuat semua data dari file
-        List<Nasabah> existingNasabah = NasabahIOHandler.readFile(nasabahCount);
+        List<Nasabah> existingNasabah = NasabahIOHandler.readFile();
 
         // Tambahkan nasabah baru ke daftar
         existingNasabah.add(createNewNasabah);
@@ -22,7 +22,9 @@ public class NasabahService implements NasabahInterface {
     }
 
     public List<Nasabah> readAllNasabah(){
-        List<Nasabah> readAll = NasabahIOHandler.readFile(this.nasabahCount);
+        List<Nasabah> readAll = NasabahIOHandler.readFile();
+        this.nasabahList = readAll;
+        this.nasabahCount = readAll.size();
 
         if (readAll.isEmpty()){
             throw new IllegalStateException("Nasabah is empty!");
@@ -32,30 +34,46 @@ public class NasabahService implements NasabahInterface {
     }
 
     public Nasabah readNasabahById(Integer id){
-//        List<Nasabah> allNasabah = readAllNasabah();
-//        for (Nasabah nasabah : allNasabah){
-//            if (nasabah.getId().equals(id)){
-//                return nasabah;
-//            }
-//        }
-//        throw new IllegalStateException("Nasabah with id " + id + " not found!");
-        return NasabahIOHandler.readFileById(id);
+        List<Nasabah> nasabahFile = NasabahIOHandler.readFile();
+
+        for (Nasabah nasabah : nasabahFile) {
+            if (nasabah.getId().equals(id)){
+                return nasabah;
+            }
+        }
+
+        throw new IllegalStateException("Nasabah dengan ID " + id + " tidak ditemukan");
     }
 
     public void updateNasabahById(Integer id, Nasabah updateNasabah){
-//        Nasabah readId = readNasabahById(id);
-//
-//        readId.setFullName(updateNasabah.getFullName());
-//        readId.setNik(updateNasabah.getNik());
-//        readId.setPhoneNumber(updateNasabah.getPhoneNumber());
-//        readId.setBirthDate(updateNasabah.getBirthDate());
-        NasabahIOHandler.writeFileById(id, updateNasabah);
+        // Baca semua nasabah dari file
+        List<Nasabah> nasabahFile = NasabahIOHandler.readFile();
 
+        // Flag untuk mengecek apakah data ditemukan
+        boolean isUpdated = false;
+
+        // Perbarui data nasabah dengan ID yang sesuai
+        for (Nasabah nasabah : nasabahFile) {
+            if (nasabah.getId().equals(id)) {
+                nasabah.setFullName(updateNasabah.getFullName());
+                nasabah.setNik(updateNasabah.getNik());
+                nasabah.setPhoneNumber(updateNasabah.getPhoneNumber());
+                nasabah.setBirthDate(updateNasabah.getBirthDate());
+                isUpdated = true;
+                break;
+            }
+        }
+
+        // Jika data ditemukan dan diupdate, tulis ulang file
+        if (isUpdated) {
+            NasabahIOHandler.writeFile(nasabahFile);
+            System.out.println("Nasabah dengan ID " + id + " berhasil diperbarui.");
+        } else {
+            throw new IllegalStateException("Nasabah dengan ID " + id + " tidak ditemukan.");
+        }
     }
 
     public void deleteNasabahById(Integer id){
-//        Nasabah readId = readNasabahById(id);
-//        this.nasabahList.remove(readId);
         NasabahIOHandler.deleteById(id);
     }
 

@@ -62,6 +62,7 @@ public class Main {
                                     + nasabah.getBirthDate() + ", "
                             );
                         }
+                        System.out.println("Jumlah nasabah ada " + service.getNasabahCount());
                     } catch (IllegalStateException e) {
                         System.out.println(e.getMessage());
                     }
@@ -75,9 +76,14 @@ public class Main {
                             System.out.println(e.getMessage());
                             break;
                         }
-                        Integer idRead = inputHandler.getInt("Enter ID to Show Data: ");
-                        Nasabah nasabah = service.readNasabahById(idRead);
-                        System.out.println("Data: " + nasabah);
+
+                        try {
+                            Integer idRead = inputHandler.getInt("Enter ID to Show Data: ");
+                            Nasabah nasabah = service.readNasabahById(idRead);
+                            System.out.println("Data: " + nasabah);
+                        } catch (IllegalStateException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }catch (IllegalStateException e){
                         System.out.println(e.getMessage());
                     }
@@ -109,13 +115,6 @@ public class Main {
                     service.updateNasabahById(idUpdate, updateNasabah);
                     break;
                 case 5:
-                    //                        //cek nasabah list kosong atau tidak
-//                        service.readAllNasabah();
-//                        Integer idDelete = inputHandler.getInt("Enter ID to Delete: ");
-//                        //cek nasabah sesuai id
-//                        service.readNasabahById(idDelete);
-//                        //hapus data
-//                        service.deleteNasabahById(idDelete);
                     try {
                         List<Nasabah> readAll = service.readAllNasabah();
                         for (Nasabah nasabah : readAll){
