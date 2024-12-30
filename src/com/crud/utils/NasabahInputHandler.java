@@ -1,4 +1,4 @@
-package com.enigmacamp.utils;
+package com.crud.utils;
 
 import java.util.Scanner;
 

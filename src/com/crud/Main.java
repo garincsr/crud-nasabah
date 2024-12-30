@@ -1,9 +1,9 @@
-package com.enigmacamp;
+package com.crud;
 
-import com.enigmacamp.model.Nasabah;
-import com.enigmacamp.service.NasabahService;
-import com.enigmacamp.utils.NasabahIOHandler;
-import com.enigmacamp.utils.NasabahInputHandler;
+import com.crud.model.Nasabah;
+import com.crud.service.NasabahService;
+import com.crud.utils.NasabahIOHandler;
+import com.crud.utils.NasabahInputHandler;
 
 import java.io.File;
 import java.util.List;
