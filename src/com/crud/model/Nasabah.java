@@ -1,8 +1,8 @@
-package com.enigmacamp.model;
+package com.crud.model;
 
-import com.enigmacamp.utils.IDMustBeUnique;
-import com.enigmacamp.utils.NIKMustBeUnique;
-import com.enigmacamp.utils.PhoneNumberMustBeUnique;
+import com.crud.utils.IDMustBeUnique;
+import com.crud.utils.NIKMustBeUnique;
+import com.crud.utils.PhoneNumberMustBeUnique;
 
 import java.util.List;
 

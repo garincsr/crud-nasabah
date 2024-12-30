@@ -1,9 +1,8 @@
-package com.enigmacamp.service;
+package com.crud.service;
 
-import com.enigmacamp.model.Nasabah;
+import com.crud.model.Nasabah;
 
 import java.util.List;
-import java.util.Scanner;
 
 public interface NasabahInterface {
     void createNasabah(Nasabah createNewNasabah);

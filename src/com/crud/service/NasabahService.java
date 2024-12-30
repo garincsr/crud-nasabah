@@ -1,7 +1,7 @@
-package com.enigmacamp.service;
+package com.crud.service;
 
-import com.enigmacamp.model.Nasabah;
-import com.enigmacamp.utils.NasabahIOHandler;
+import com.crud.model.Nasabah;
+import com.crud.utils.NasabahIOHandler;
 
 import java.util.ArrayList;
 import java.util.List;
